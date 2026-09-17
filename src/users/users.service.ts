@@ -29,6 +29,11 @@ export class UsersService {
     return findUser;
   }
 
+  async findOneByEmail(email:string){
+    const user = await this.userModel.findOne({email:email});
+    return user;
+  }
+
   async update(id: string, updateUserDto: UpdateUserDto) {
     if (!isValidObjectId(id)) throw new BadRequestException("Invalid ID");
     const updatedUser = await this.userModel.findByIdAndUpdate(id, updateUserDto, {new:true});
