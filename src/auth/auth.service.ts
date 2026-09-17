@@ -28,6 +28,7 @@ export class AuthService {
       signInDto.password,
       existingUser.password,
     );
+    if (!isEqualPass) throw new BadRequestException("invalid credentials");
     const payload = {
         userId:existingUser._id
     }
