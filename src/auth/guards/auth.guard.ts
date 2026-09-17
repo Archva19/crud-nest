@@ -3,6 +3,7 @@ import {
   CanActivate,
   ExecutionContext,
   Injectable,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Observable } from 'rxjs';
@@ -20,7 +21,9 @@ export class AuthGuard implements CanActivate {
     try {
       const payload = this.jwtService.verify(token);
       request.userId = payload.userId;
-    } catch (error) {}
+    } catch (error) {
+        throw new UnauthorizedException('Invalid or expired token');
+    }
     return true;
   }
 
